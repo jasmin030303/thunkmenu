@@ -2,11 +2,12 @@ const initialState = {
   product: JSON.parse(localStorage.getItem("product")) || [],
   modal: false,
   basket: JSON.parse(localStorage.getItem("basket")) || [],
-  dark: false,
+  dark: localStorage.getItem("dark") === "true",
 };
 
 export const Reducer = (state = initialState, action) => {
   switch (action.type) {
+    
     case "GET_PRODUCT":
       localStorage.setItem("product", JSON.stringify(action.payload));
       return { ...state, product: action.payload };
@@ -22,13 +23,17 @@ export const Reducer = (state = initialState, action) => {
     case "CLOSE_MODAL":
       return { ...state, modal: false };
 
-    case "GET_BASKET":
-      return { ...state, basket: action.payload };
-
     case "ADD_TO_BASKET":
       let res = [...state.basket, { ...action.payload, quantity: 1 }];
       localStorage.setItem("basket", JSON.stringify(res));
       return { ...state, basket: res };
+
+    case "DELETE_BASKET":
+      let delBasket = [
+        ...state.basket.filter((el) => el._id !== action.payload),
+      ];
+      localStorage.setItem("basket", JSON.stringify(delBasket));
+      return { ...state, basket: delBasket };
 
     case "DELETE_PRODUCT":
       let delPro = [...state.product.filter((el) => el._id !== action.payload)];
@@ -36,10 +41,12 @@ export const Reducer = (state = initialState, action) => {
       return { ...state, product: delPro };
 
     case "DARK":
-      return { ...state, dark: true };
+      localStorage.setItem("dark", JSON.stringify(action.payload));
+      return { ...state, dark: action.payload };
 
     case "DARK_LIGHT":
-      return { ...state, dark: false };
+      localStorage.setItem("dark", JSON.stringify(action.payload));
+      return { ...state, dark: action.payload };
 
     case "INCREMENT":
       let incrementQuan = state.basket.map((el) =>

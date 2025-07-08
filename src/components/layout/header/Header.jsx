@@ -42,14 +42,14 @@ const Header = () => {
             <div className="header--nav__btn">
               <button
                 className="header--nav__btn--white"
-                onClick={() => dispatch({ type: "DARK" })}
+                onClick={() => dispatch({ type: "DARK", payload: true })}
               >
                 <TiAdjustBrightness />
               </button>
               <div className="header--nav__btn--street"></div>
               <button
                 className="header--nav__btn--black"
-                onClick={() => dispatch({ type: "DARK_LIGHT" })}
+                onClick={() => dispatch({ type: "DARK_LIGHT", payload: false })}
               >
                 <TiAdjustContrast />
               </button>

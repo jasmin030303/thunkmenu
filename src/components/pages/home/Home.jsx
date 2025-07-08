@@ -26,9 +26,7 @@ const Home = () => {
     dispatch({ type: "DELETE_PRODUCT", payload: item });
   }
 
-  // const cate = category
-  //   ? product.filter((el) => el.category === category)
-  //   : product;
+ 
 
   useEffect(() => {
     dispatch(getProduct());
